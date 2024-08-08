@@ -1,0 +1,206 @@
+
+@font-face {
+    font-family: 'BoyzRGrossShadowNF';
+    src: url(./font/boyzrgross/BoyzRGrossShadowNF.ttf);
+}
+
+@font-face {
+    font-family: 'Zebulon';
+    src: url(./font/zebulon/ZebulonBold.otf);
+}
+
+* { padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: linear-gradient(to bottom, LightSlateGray, DarkSlateGray);
+}
+
+.entete p.titregeneral {
+     /* display:flex;
+    flex-direction: row; */
+    /* position:sticky;  */
+    /* padding:0; */
+    position:relative;
+    padding-left:50px;
+    margin:auto;
+    font-size:5em;
+    /* vertical-align: center; */
+    justify-content: center;
+    justify-content: space-around;
+    text-shadow: rgb(220, 20, 20) 8px 8px 5px;
+}
+.entete p.soustitre {
+    padding-left:300px;
+    margin:5px 0px 25px 0px;
+    font-size:2.5em;
+    text-shadow: rgb(190, 9, 9) 8px 8px 16px;
+}
+
+.entete img.robot {
+    position:absolute;
+    right:-340px;
+    top:70px;
+    transform:scale(1.5);
+}
+.entete img.arnold {
+    position:absolute;
+    left:0px;
+    top:60px;
+    transform:scale(0.8);
+}
+
+.piedpage {
+    margin : 20px 30px;
+    font-weight:bold;
+    color:white;
+}
+
+p {
+    font-family: 'Zebulon','BoyzRGrossShadowNF', Arial, Helvetica, sans-serif;
+    padding: 10px;
+    margin: 15px;
+    font-size:50px;
+    font-style: italic;
+    font-weight: bold;
+    color:white;
+    /* #2d0ee0 */
+}
+
+/* ********************************** */
+/* ********************************** */
+
+.content-form{
+    display:flex;
+    position:relative;
+    justify-content: center;
+    justify-content: space-around;
+    height:200px;
+}
+
+form {
+    position:absolute;
+    background-color: white;
+    padding:10px;
+    width:max-content;
+    height:max-content;
+    border-radius: 5px;
+    border : 2px solid black;
+    box-shadow: 10px 10px 2px 1px rgba(40, 40, 170, 0.4);
+}
+
+.pinDroite {
+    position:absolute;
+    bottom:10px;
+    right:-20px;
+}
+
+.pinGauche {
+    position:absolute;
+    top:-30px;
+    left:-10px;
+}
+
+label {
+    font-style:italic;
+    font-size: 1.2em;
+}
+
+.grid-container {
+    display:inline-grid;
+    width:50vw;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+    grid-gap: 2px 5px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.grid-item-2 { grid-column: 1; grid-row: 2; }
+
+.grid-item-3 { grid-column: 2; grid-row: 2; }
+
+.grid-item-4 { grid-column: 1; grid-row: 3; }
+
+.grid-item-5 { grid-column: 2; grid-row: 3; }
+
+/* ********************************** */
+/* ********************************** */
+
+table {
+    border-spacing: 2px;
+    /* table-layout:auto;
+    width: 150%; */
+    padding: 10px;
+    margin-left : 10px;
+    margin-right: 10px;
+    margin-top : 20px;
+    /* margin: 0 10 0 10; */
+    border-radius: 5px;
+    border: 2px solid black;
+    box-shadow: 10px 10px 2px 1px rgba(40, 40, 170, 0.4);
+}
+
+.largeur1 {text-align:left;}
+
+
+thead tr th#Brique      {position:sticky; text-align:left; z-index:2; left:0px; top:30px;}
+thead tr th#Application {position:sticky; text-align:left; z-index:2; left:120px; top:30px;}
+thead tr th#Hote        {position:sticky; text-align:left; z-index:2; left:210px; top:30px;}
+thead tr th#Service     {position:sticky; text-align:left; z-index:2; left:290px; top:30px;}
+thead tr th.largeur1 {position:sticky; z-index:2; left:0px; top:0px;}
+thead tr th.largeur2 {position:sticky; z-index:2; left:0px; top:0px;}
+thead tr th.heure {position:sticky; z-index:1; top:30px;}
+
+tbody tr > :first-child {position:sticky;  z-index:1; left:0px; background-color: #f2f2f2;}
+tbody tr > :nth-child(2) {position:sticky; z-index:1; left:120px; background-color: #f2f2f2;}
+tbody tr > :nth-child(3) {position:sticky; z-index:1; left:210px; background-color: #f2f2f2;}
+tbody tr > :nth-child(4) {position:sticky; z-index:1; left:290px; background-color: #f2f2f2;}
+
+th {
+    cursor: pointer;
+    padding: 5px;
+    height:30px;
+    color:white;
+    font-weight: bold; 
+    background-color: #088880;
+    white-space: nowrap;
+}
+th.heure {
+    font-size:15px;
+    /* width:35px; */
+}
+
+td {
+    text-align: left;
+    padding: 1px;
+    border-spacing: 5px;
+    /* font-size: 0.8em; */
+    border: 1px solid white;
+    white-space: nowrap;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+tr:nth-child(odd) {
+    background-color: white;
+}
+
+/* .largeur {
+    width:50px;
+} */
+
+.transparent {
+    vertical-align: bottom;
+    text-align: center;
+    height:20px;
+    font-size:2px;
+    /* border-left-color: 5px solid white; */
+    color: black; 
+}
+
+

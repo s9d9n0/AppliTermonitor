@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthese</title>
+    <link rel="stylesheet" href="./style.css"/>
+    <link rel="icon" type="image/x-icon" href="img/favicon-moon.png">
+</head>
+<body>
+    
+    <div class="entete">
+        <p class="titregeneral">THE TERMONITOR</p>
+        <p class="soustitre"># Centreon Events Store #</p>
+        <img class="robot" src="./img/Terminator-Robot-light-transparent.png" alt="term-robot"/>
+        <img class="arnold" src="./img/Terminator-Arnold-light-transparent.png" alt="term-arnold"/>
+    </div>
+
+    <div class="content-form">
+    <form name="my-form" action="">
+        
+        <div id="dateRef"></div>
+        <img class="pinDroite" src="./img/pngimg_pin_PNG80_xs.png" alt="image pin"/>
+        <img class="pinGauche" src="./img/pngimg_pin_PNG74_xs.png" alt="image pin"/>
+
+        <br />
+
+        <div> 
+            <p style="color:black; font-size: 1em; margin:0px; padding:0px;" class="ZoneDate"></p>
+        </div> 
+
+        <div class="grid-container">
+
+        <div class="grid-item-1">
+        <label>Veuillez choisir une zone :</label>
+        <select id="zone" name="zone">
+            <option value="" selected>Selection...</option>
+            <option value="01_DMZ_Auze">DMZ - DC2</option>
+            <option value="02_DMZ_Osny">DMZ - DC1</option>
+            <option value="03_Part_Auze">Part - DC2</option>
+            <option value="04_Part_Osny">Part - DC1</option>
+            <option value="05_ZoneInt_Auze">Interne - DC2</option>
+            <option value="06_ZoneInt_Osny">Interne - DC1</option>
+            <option value="07_ZoneSIA_Auze">SIA - DC2</option>
+            <option value="08_ZoneSIA_Osny">SIA - DC1</option>
+        </select>
+        </div>
+
+        <!-- <br /><br /> -->
+
+        <div class="grid-item-2">
+        <label>Sélection brique / quartier :</label><br />
+        <input type="text" id="brique"
+        onfocusin="focusInColonne('brique')" onfocusout="focusOutColonne('brique')" 
+        onkeyup="filtreColonne('brique',0)" 
+        placeholder="libellé brique/quartier..." 
+        style="width: 300px;" title="recherche brique/quartier">
+        </div>
+
+        <!-- <br /><br /> -->
+
+        <div class="grid-item-3">
+        <label>Sélection application :</label><br />
+        <input type="text" id="application"
+        onfocusin="focusInColonne('application')" onfocusout="focusOutColonne('application')" 
+        onkeyup="filtreColonne('application',1)" 
+        placeholder="libellé application..."
+         style="width: 300px;" title="recherche application">
+        </div>
+
+        <!-- <br /><br /> -->
+
+        <div class="grid-item-4">
+        <label>Sélection h&ocirc;te :</label><br />
+        <input type="text" id="hote" 
+        onfocusin="focusInColonne('hote')" onfocusout="focusOutColonne('hote')" onkeyup="filtreColonne('hote',2)"
+        placeholder="libellé h&ocirc;te..."
+        style="width: 300px;" title="recherche hote">
+        </div>
+
+        <!-- <br /><br /> -->
+
+        <div class="grid-item-5">
+        <label>Sélection service :</label><br />
+        <input type="text" id="service"
+        onfocusin="focusInColonne('service')" onfocusout="focusOutColonne('service')" 
+        onkeyup="filtreColonne('service',3)"
+        placeholder="libellé service..."
+        style="width: 300px;" title="recherche service">
+        </div>
+
+        </div>
+    </form>
+    </div>
+
+    <div id="choixZone" style="display:none;"></div>
+    <!-- <div id="choixZone" style="display:none;"></div> -->
+
+    <hr>
+
+    <!-- <div id="container"> -->
+        <table id="MaTable">
+            <thead></thead>
+            <tbody></tbody>
+        </table>
+    <!-- </div> -->
+
+    <div class="piedpage">
+        <i>Création : 4nt0ni0 S3D3N0</i>
+    </div>
+
+    <script src="./function_CreaTable_SynthTOT.js"></script>
+
+    <script>
+
+        const fetchData = () => {
+            return new Promise((resolve, reject) => (
+                fetch("./df_global_heure.json")
+                    .then(res => res.json())
+                    .then(data => resolve(data[0]))
+                    .catch(err => reject(err))
+            ))
+        }
+
+        async function getData() {
+            // console.log("Hello");
+            const data = await fetchData()
+            // console.log(data);
+        
+            let choixZone = document.getElementById("choixZone").innerText;
+            console.log("la zone choisie est égale à : "+choixZone);
+
+            let Data_Obj = JSON.parse(data); // pour retransformer en Object !
+            console.log(Data_Obj);
+
+            Data_Obj = Data_Obj.filter(dat => (dat.zone == choixZone))
+            // Data_Obj = Data_Obj.filter(dat => (dat.zone == "01_DMZ_Auze" &&
+            //                                    dat.Gr1 == "DF Preprod"))
+
+            console.log(Data_Obj);
+
+            getTableHead(Data_Obj);
+            getTableBody(Data_Obj);
+        }
+ 
+    // getData()
+    
+    /////////////////////////////////////////////
+
+    let form = document.forms['my-form'];
+
+    let zone = form.zone;
+    let modaliteZone = form.zone.options;
+    console.log(zone);
+    console.log(modaliteZone);
+
+    zone.required = true;
+
+
+    let optionText = "";
+    let choice = "";
+
+    zone.onchange = function() {
+        let optionValue = this.value;
+        //console.log(optionValue);
+        // let index = this.selectedIndex;
+        // optionText = this.options[index].innerText;
+        // console.log(optionText," en index n° ", index)
+        optionText = this[this.selectedIndex].value;
+
+        let choixZone = document.getElementById("choixZone");
+        choixZone.innerText = optionText;
+        //console.log(optionText);
+        //return optionText;
+
+        // Mise a zero des divers champs du formulaire lors d'un changement de zone 
+        let changeBrique = document.getElementById('brique');
+        // console.log("changement brique");
+        // console.log(changeBrique);
+        // console.log(changeBrique.value);
+        changeBrique.value ="";
+
+        let changeApplication = document.getElementById('application');
+        changeApplication.value ="";
+
+        let changeHote = document.getElementById('hote');
+        changeHote.value ="";
+
+        let changeService = document.getElementById('service');
+        changeService.value ="";
+
+
+        getData();
+    }
+
+    choixZone = zone.onchange();
+    console.log("choice zone est egal a :"+choixZone);
+
+    </script>
+  
+    <script src="./function_TriTable_SynthTOT.js"></script>
+    <script src="./function_FiltreTable_SynthTOT.js"></script>
+    <script src="./function_Parallax_SynthTOT.js"></script>
+
+    <script src="./recupDate.js"></script>
+
+</body>
+</html>
